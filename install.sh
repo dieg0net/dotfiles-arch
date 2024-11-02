@@ -96,7 +96,18 @@ done
 
 echo "AUR packages for Yazi installation complete."
 
-# Will add other AUR packages here.
+echo "Installing additional AUR packages..."
+aur_additional_packages=(
+    librewolf-bin
+    # Add more packages here as needed
+)
+
+for aur_package in "${aur_additional_packages[@]}"; do
+    echo "Installing $aur_package..."
+    paru -S --noconfirm "$aur_package"
+done
+
+echo "Additional AUR package installation complete."
 
 # Install Flatpak applications
 echo "Installing Flatpak applications..."
