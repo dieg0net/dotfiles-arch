@@ -99,7 +99,7 @@ echo "AUR packages for Yazi installation complete."
 echo "Installing additional AUR packages..."
 aur_additional_packages=(
     librewolf-bin
-    # Add more packages here as needed
+    kew-git
 )
 
 for aur_package in "${aur_additional_packages[@]}"; do
