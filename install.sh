@@ -56,6 +56,11 @@ packages=(
     flatpak
     timeshift
     ttf-jetbrains-mono-nerd
+    hyprpaper
+    xdg-desktop-portal-hyprland
+    hyprlock
+    qemu-full
+    virt-manager
 )
 
 for package in "${packages[@]}"; do
@@ -114,7 +119,6 @@ flatpak_apps=(
     "flathub md.obsidian.Obsidian"
     "flathub com.obsproject.Studio"
     "flathub com.valvesoftware.Steam"
-    "flathub io.gitlab.librewolf-community"
     "flathub org.kde.kdenlive"
     "flathub com.usebottles.bottles"
 )
