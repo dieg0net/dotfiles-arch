@@ -129,6 +129,24 @@ for flatpak_app in "${flatpak_apps[@]}"; do
 done
 
 echo "Flatpak application installation complete."
+
+# QEMU / Virt-Manager Setup
+echo "Configuring QEMU and Virt-Manager..."
+
+# Add the current user to the libvirt group
+sudo usermod -a -G libvirt $(whoami)
+echo "User $(whoami) added to the libvirt group."
+
+# Start the libvirtd service
+sudo systemctl start libvirtd.service
+echo "libvirtd service started."
+
+# Enable the libvirtd service to start on boot
+sudo systemctl enable libvirtd.service
+echo "libvirtd service enabled to start on boot."
+
+echo "QEMU and Virt-Manager configuration complete."
+
 echo "Script completed successfully."
 
 
