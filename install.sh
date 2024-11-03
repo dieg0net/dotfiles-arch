@@ -55,6 +55,7 @@ packages=(
     neovim
     flatpak
     timeshift
+    ttf-jetbrains-mono-nerd
 )
 
 for package in "${packages[@]}"; do
