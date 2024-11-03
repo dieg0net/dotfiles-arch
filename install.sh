@@ -61,6 +61,7 @@ packages=(
     hyprlock
     qemu-full
     virt-manager
+    dnsmasq #needed for Virt-manager
 )
 
 for package in "${packages[@]}"; do
