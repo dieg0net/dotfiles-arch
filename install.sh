@@ -108,6 +108,13 @@ aur_packages=(
     fzf
     zoxide
     imagemagick
+    # Needed for hyprpanel
+    grimblast-git
+    gpu-screen-recorder
+    hyprpicker
+    matugen-bin
+    python-gpustat
+    aylurs-gtk-shell-git
 )
 
 for aur_package in "${aur_packages[@]}"; do
