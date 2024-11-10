@@ -54,14 +54,27 @@ packages=(
     network-tools
     neovim
     flatpak
-    timeshift
+    dolphin
     ttf-jetbrains-mono-nerd
-    hyprpaper
     xdg-desktop-portal-hyprland
     hyprlock
     qemu-full
     virt-manager
     dnsmasq #needed for Virt-manager
+    #needed for hyprpanel
+    libgtop
+    bluez
+    bluez-utils
+    btop
+    dart-sass
+    wl-clipboard
+    brightnessctl
+    swww
+    python
+    gnome-bluetooth-3.0
+    pacman-contrib
+    power-profiles-daemon
+    gvfs
 )
 
 for package in "${packages[@]}"; do
