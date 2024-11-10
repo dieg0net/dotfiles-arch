@@ -93,8 +93,11 @@ makepkg -si --noconfirm
 echo "Paru installation complete."
 
 # Install AUR packages with paru
-echo "Installing AUR packages needed for Yazi..."
-aur_packages_for_yazi=(
+echo "Installing AUR packages..."
+aur_packages=(
+    librewolf-bin
+    kew-git
+    # Needed for Yazi
     yazi-git
     ffmpegthumbnailer
     p7zip
@@ -107,25 +110,12 @@ aur_packages_for_yazi=(
     imagemagick
 )
 
-for aur_package in "${aur_packages_for_yazi[@]}"; do
+for aur_package in "${aur_packages[@]}"; do
     echo "Installing $aur_package..."
-    paru -S --noconfirm "$aur_package"
+    paru -S --needed --noconfirm "$aur_package"
 done
 
-echo "AUR packages for Yazi installation complete."
-
-echo "Installing additional AUR packages..."
-aur_additional_packages=(
-    librewolf-bin
-    kew-git
-)
-
-for aur_package in "${aur_additional_packages[@]}"; do
-    echo "Installing $aur_package..."
-    paru -S --noconfirm "$aur_package"
-done
-
-echo "Additional AUR package installation complete."
+echo "AUR package installation complete."
 
 # Install Flatpak applications
 echo "Installing Flatpak applications..."
@@ -143,6 +133,16 @@ for flatpak_app in "${flatpak_apps[@]}"; do
 done
 
 echo "Flatpak application installation complete."
+
+# Install Bun (Required for hyprpanel)
+echo "Installing Bun..."
+curl -fsSL https://bun.sh/install | bash
+sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
+echo "Bun installation complete."
+
+# Installs HyprPanel to ~/.config/ags
+git clone https://github.com/Jas-SinghFSU/HyprPanel.git && \
+ln -s $(pwd)/HyprPanel $HOME/.config/ags
 
 # QEMU / Virt-Manager Setup
 echo "Configuring QEMU and Virt-Manager..."
