@@ -61,20 +61,6 @@ packages=(
     qemu-full
     virt-manager
     dnsmasq #needed for Virt-manager
-    #needed for hyprpanel
-    libgtop
-    bluez
-    bluez-utils
-    btop
-    dart-sass
-    wl-clipboard
-    brightnessctl
-    swww
-    python
-    gnome-bluetooth-3.0
-    pacman-contrib
-    power-profiles-daemon
-    gvfs
 )
 
 for package in "${packages[@]}"; do
@@ -108,13 +94,6 @@ aur_packages=(
     fzf
     zoxide
     imagemagick
-    # Needed for hyprpanel
-    grimblast-git
-    gpu-screen-recorder
-    hyprpicker
-    matugen-bin
-    python-gpustat
-    aylurs-gtk-shell-git
 )
 
 for aur_package in "${aur_packages[@]}"; do
@@ -140,16 +119,6 @@ for flatpak_app in "${flatpak_apps[@]}"; do
 done
 
 echo "Flatpak application installation complete."
-
-# Install Bun (Required for hyprpanel)
-echo "Installing Bun..."
-curl -fsSL https://bun.sh/install | bash
-sudo ln -sf $HOME/.bun/bin/bun /usr/local/bin/bun
-echo "Bun installation complete."
-
-# Installs HyprPanel to ~/.config/ags
-git clone https://github.com/Jas-SinghFSU/HyprPanel.git && \
-ln -s $(pwd)/HyprPanel $HOME/.config/ags
 
 # QEMU / Virt-Manager Setup
 echo "Configuring QEMU and Virt-Manager..."
