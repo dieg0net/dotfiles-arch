@@ -61,6 +61,8 @@ packages=(
     qemu-full
     virt-manager
     dnsmasq #needed for Virt-manager
+    wine #Needed for bottles
+    winetricks #Needed for bottles
 )
 
 for package in "${packages[@]}"; do
