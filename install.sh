@@ -63,6 +63,7 @@ packages=(
     dnsmasq #needed for Virt-manager
     wine #Needed for bottles
     winetricks #Needed for bottles
+    flatseal #Permissions GUI for Flatpak
 )
 
 for package in "${packages[@]}"; do
