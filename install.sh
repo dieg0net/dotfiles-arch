@@ -123,9 +123,6 @@ done
 
 echo "Flatpak application installation complete."
 
-# Set DNS if using Network manager TODO add an option to ask user if they are using network manager.
-sudo nmcli connection modify "Wired connection 1" ipv4.dns "1.1.1.1 9.9.9.9"
-
 # QEMU / Virt-Manager Setup
 echo "Configuring QEMU and Virt-Manager..."
 
@@ -145,4 +142,7 @@ echo "QEMU and Virt-Manager configuration complete."
 
 echo "Script completed successfully."
 
+# Set DNS if using Network manager TODO add an option to ask user if they are using network manager.
+sudo nmcli connection modify "Wired connection 1" ipv4.dns "1.1.1.1 9.9.9.9"
+sudo nmcli connection down "Wired connection 1" && sudo nmcli connection up "Wired connection 1"
 
