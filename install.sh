@@ -9,18 +9,13 @@ RUN_VIRT="${RUN_VIRT:-yes}"
 DNS_MODE="${DNS_MODE:-ask}"
 DNS_SERVERS="${DNS_SERVERS:-1.1.1.1 9.9.9.9}"
 NM_CONNECTION="${NM_CONNECTION:-}"
-PRESET="${PRESET:-}"
 INTERACTIVE="${INTERACTIVE:-auto}"
 TARGET_USER="${SUDO_USER:-${USER:-}}"
 
-SELECT_DESKTOP="no"
-SELECT_YAZI="no"
-SELECT_DEV="no"
-SELECT_CREATOR="no"
-SELECT_GAMING="no"
-SELECT_VIRT="no"
-SELECT_PRIVACY="no"
-SELECT_FLATPAKS="no"
+SELECT_ALL="no"
+MINIMAL_ONLY="no"
+DRY_RUN="no"
+NEEDS_VIRT_SETUP="no"
 
 BASE_PACKAGES=(
     7zip
@@ -38,97 +33,19 @@ BASE_PACKAGES=(
     zoxide
 )
 
-DESKTOP_PACKAGES=(
-    brightnessctl
-    dolphin
-    grim
-    hyprland
-    hyprlock
-    kitty
-    mako
-    network-manager-applet
-    pavucontrol
-    pipewire
-    pipewire-alsa
-    pipewire-pulse
-    playerctl
-    slurp
-    ttf-jetbrains-mono-nerd
-    waybar
-    wireplumber
-    wl-clipboard
-    wofi
-    xdg-desktop-portal
-    xdg-desktop-portal-gtk
-    xdg-desktop-portal-hyprland
-)
+CATEGORY_SLUGS=()
+CATEGORY_TITLES=()
+ITEM_KEYS=()
+ITEM_CATEGORIES=()
+ITEM_LABELS=()
+ITEM_PACMAN=()
+ITEM_AUR=()
+ITEM_FLATPAK=()
+ITEM_POST=()
 
-YAZI_PACKAGES=(
-    chafa
-    ffmpeg
-    ffmpegthumbnailer
-    imagemagick
-    poppler
-    resvg
-    yazi
-)
-
-DEV_PACKAGES=(
-    github-cli
-    go
-    nodejs
-    npm
-    python
-    python-pip
-    rustup
-)
-
-CREATOR_PACKAGES=(
-    gimp
-    inkscape
-)
-
-GAMING_PACKAGES=(
-    gamescope
-    mangohud
-    wine
-    winetricks
-)
-
-VIRT_PACKAGES=(
-    bridge-utils
-    dnsmasq
-    edk2-ovmf
-    qemu-full
-    virt-manager
-)
-
-PRIVACY_PACKAGES=(
-    ufw
-)
-
-AUR_MEDIA_PACKAGES=(
-    kew-git
-)
-
-AUR_PRIVACY_PACKAGES=(
-    librewolf-bin
-)
-
-FLATPAK_BASE_APPS=(
-    md.obsidian.Obsidian
-)
-
-FLATPAK_CREATOR_APPS=(
-    com.obsproject.Studio
-    org.kde.kdenlive
-)
-
-FLATPAK_GAMING_APPS=(
-    com.usebottles.bottles
-    com.valvesoftware.Steam
-)
-
+REQUESTED_CATEGORIES=()
+REQUESTED_APPS=()
+SELECTED_ITEMS=()
 PACMAN_PACKAGES=()
 AUR_PACKAGES=()
 FLATPAK_APPS=()
@@ -173,8 +90,88 @@ append_unique() {
     local -n target="$target_name"
     local item
     for item in "$@"; do
+        [[ -z "$item" ]] && continue
         contains "$item" "${target[@]}" || target+=("$item")
     done
+}
+
+append_words() {
+    local target_name="$1"
+    shift
+
+    local words word
+    for words in "$@"; do
+        for word in $words; do
+            append_unique "$target_name" "$word"
+        done
+    done
+}
+
+add_category() {
+    CATEGORY_SLUGS+=("$1")
+    CATEGORY_TITLES+=("$2")
+}
+
+add_item() {
+    ITEM_CATEGORIES+=("$1")
+    ITEM_KEYS+=("$2")
+    ITEM_LABELS+=("$3")
+    ITEM_PACMAN+=("$4")
+    ITEM_AUR+=("$5")
+    ITEM_FLATPAK+=("$6")
+    ITEM_POST+=("${7:-}")
+}
+
+define_catalog() {
+    add_category "desktop" "Desktop & Wayland"
+    add_item "desktop" "hyprland" "Hyprland session and portals" "hyprland xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland" "" "" ""
+    add_item "desktop" "waybar" "Waybar status bar" "waybar" "" "" ""
+    add_item "desktop" "wofi" "Wofi app launcher" "wofi" "" "" ""
+    add_item "desktop" "kitty" "Kitty terminal" "kitty" "" "" ""
+    add_item "desktop" "dolphin" "Dolphin graphical file manager" "dolphin" "" "" ""
+    add_item "desktop" "mako" "Mako notifications" "mako" "" "" ""
+    add_item "desktop" "clipboard" "Screenshots and Wayland clipboard tools" "grim slurp wl-clipboard" "" "" ""
+    add_item "desktop" "hyprlock" "Hyprlock screen locker" "hyprlock" "" "" ""
+    add_item "desktop" "desktop-controls" "Brightness, media, tray, and audio controls" "brightnessctl network-manager-applet pavucontrol playerctl" "" "" ""
+    add_item "desktop" "fonts" "JetBrainsMono Nerd Font" "ttf-jetbrains-mono-nerd" "" "" ""
+
+    add_category "audio" "Audio"
+    add_item "audio" "pipewire" "PipeWire audio stack" "pipewire pipewire-alsa pipewire-pulse wireplumber" "" "" ""
+    add_item "audio" "pavucontrol" "PulseAudio volume control" "pavucontrol" "" "" ""
+
+    add_category "terminal" "Terminal & Files"
+    add_item "terminal" "yazi" "Yazi terminal file manager" "yazi" "" "" ""
+    add_item "terminal" "yazi-preview" "Yazi preview helpers" "chafa ffmpeg ffmpegthumbnailer imagemagick poppler resvg" "" "" ""
+    add_item "terminal" "kew" "Kew terminal music player" "" "kew-git" "" ""
+
+    add_category "browsers" "Browsers & Notes"
+    add_item "browsers" "librewolf" "LibreWolf browser" "" "librewolf-bin" "" ""
+    add_item "browsers" "obsidian" "Obsidian notes" "" "" "md.obsidian.Obsidian" ""
+
+    add_category "development" "Development"
+    add_item "development" "github-cli" "GitHub CLI" "github-cli" "" "" ""
+    add_item "development" "go" "Go toolchain" "go" "" "" ""
+    add_item "development" "node" "Node.js and npm" "nodejs npm" "" "" ""
+    add_item "development" "python" "Python and pip" "python python-pip" "" "" ""
+    add_item "development" "rust" "Rustup" "rustup" "" "" ""
+
+    add_category "creative" "Creator Apps"
+    add_item "creative" "gimp" "GIMP image editor" "gimp" "" "" ""
+    add_item "creative" "inkscape" "Inkscape vector editor" "inkscape" "" "" ""
+    add_item "creative" "obs" "OBS Studio" "" "" "com.obsproject.Studio" ""
+    add_item "creative" "kdenlive" "Kdenlive video editor" "" "" "org.kde.kdenlive" ""
+
+    add_category "gaming" "Gaming"
+    add_item "gaming" "steam" "Steam" "" "" "com.valvesoftware.Steam" ""
+    add_item "gaming" "bottles" "Bottles" "" "" "com.usebottles.bottles" ""
+    add_item "gaming" "wine" "Wine and Winetricks" "wine winetricks" "" "" ""
+    add_item "gaming" "gamescope" "Gamescope and MangoHud" "gamescope mangohud" "" "" ""
+
+    add_category "virtualization" "Virtualization"
+    add_item "virtualization" "virt-manager" "QEMU, libvirt, and virt-manager" "bridge-utils dnsmasq edk2-ovmf qemu-full virt-manager" "" "" "virt"
+
+    add_category "security" "Privacy & Security"
+    add_item "security" "ufw" "UFW firewall package" "ufw" "" "" ""
 }
 
 usage() {
@@ -182,58 +179,113 @@ usage() {
         "Usage: $0 [options]" \
         "" \
         "Options:" \
-        "  --preset NAME       Use a preset: minimal, desktop, creator, gaming, virt, full" \
-        "  --list-presets      Show available presets and exit" \
-        "  --repo URL          Dotfiles repo for chezmoi (default: $DOTFILES_REPO)" \
-        "  --ssh               Use the SSH GitHub repo URL for chezmoi" \
-        "  --non-interactive   Do not prompt; uses --preset or desktop by default" \
-        "  --skip-dotfiles     Install chezmoi but do not run chezmoi init/update" \
-        "  --skip-aur          Skip paru and AUR package installation" \
-        "  --skip-flatpak      Skip Flatpak remote/app installation" \
-        "  --skip-virt         Skip libvirt/virt-manager service setup" \
-        "  --set-dns           Configure NetworkManager DNS without prompting" \
-        "  --no-dns            Skip NetworkManager DNS configuration" \
-        "  -h, --help          Show this help message" \
+        "  --all                 Select every optional app and bundle" \
+        "  --minimal             Install only base tools and dotfiles" \
+        "  --category NAME       Select every app in a category; repeatable" \
+        "  --app KEY             Select one app or bundle by key; repeatable" \
+        "  --list-categories     Show categories, app keys, and app labels" \
+        "  --dry-run             Print the install plan without changing the system" \
+        "  --repo URL            Dotfiles repo for chezmoi (default: $DOTFILES_REPO)" \
+        "  --ssh                 Use the SSH GitHub repo URL for chezmoi" \
+        "  --non-interactive     Do not prompt; use --all, --minimal, --category, or --app" \
+        "  --skip-dotfiles       Install chezmoi but do not run chezmoi init/update" \
+        "  --skip-aur            Skip paru and AUR package installation" \
+        "  --skip-flatpak        Skip Flatpak setup and Flatpak apps" \
+        "  --skip-virt           Skip libvirt/virt-manager service setup" \
+        "  --set-dns             Configure NetworkManager DNS without prompting" \
+        "  --no-dns              Skip NetworkManager DNS configuration" \
+        "  -h, --help            Show this help message" \
+        "" \
+        "Examples:" \
+        "  $0" \
+        "  $0 --dry-run --category desktop --app steam --non-interactive" \
+        "  $0 --all --non-interactive" \
+        "  $0 --category desktop --category development --app steam" \
+        "  $0 --minimal --non-interactive --no-dns" \
         "" \
         "Environment overrides:" \
         "  DOTFILES_REPO, APPLY_DOTFILES, RUN_AUR, RUN_FLATPAK, RUN_VIRT," \
-        "  DNS_MODE, DNS_SERVERS, NM_CONNECTION, PRESET, INTERACTIVE"
+        "  DNS_MODE, DNS_SERVERS, NM_CONNECTION, INTERACTIVE"
 }
 
-list_presets() {
-    printf '%s\n' \
-        "Available presets:" \
-        "  minimal   Base CLI tools, chezmoi, and dotfiles" \
-        "  desktop   Minimal plus Hyprland desktop, audio, clipboard, launcher, and Yazi" \
-        "  creator   Desktop plus creator packages and OBS/Kdenlive Flatpaks" \
-        "  gaming    Desktop plus gaming helpers, Steam, and Bottles" \
-        "  virt      Desktop plus QEMU, virt-manager, and libvirt setup" \
-        "  full      Everything this installer knows how to set up"
+category_title() {
+    local slug="$1"
+    local index
+    for index in "${!CATEGORY_SLUGS[@]}"; do
+        if [[ "${CATEGORY_SLUGS[$index]}" == "$slug" ]]; then
+            printf '%s\n' "${CATEGORY_TITLES[$index]}"
+            return 0
+        fi
+    done
+
+    printf '%s\n' "$slug"
+}
+
+normalize_category() {
+    case "$1" in
+        audio|sound) printf '%s\n' "audio" ;;
+        browser|browsers|notes|web) printf '%s\n' "browsers" ;;
+        creative|creator|media) printf '%s\n' "creative" ;;
+        desktop|wayland|hyprland) printf '%s\n' "desktop" ;;
+        dev|development|code) printf '%s\n' "development" ;;
+        files|shell|terminal|term) printf '%s\n' "terminal" ;;
+        gaming|games) printf '%s\n' "gaming" ;;
+        privacy|security) printf '%s\n' "security" ;;
+        virt|virtualization|vm|vms) printf '%s\n' "virtualization" ;;
+        *) printf '%s\n' "$1" ;;
+    esac
+}
+
+list_categories() {
+    local category index
+    for category in "${CATEGORY_SLUGS[@]}"; do
+        printf '\n%s (%s)\n' "$(category_title "$category")" "$category"
+        for index in "${!ITEM_KEYS[@]}"; do
+            [[ "${ITEM_CATEGORIES[$index]}" == "$category" ]] || continue
+            printf '  %-16s %s\n' "${ITEM_KEYS[$index]}" "${ITEM_LABELS[$index]}"
+        done
+    done
+}
+
+split_requested_values() {
+    local target_name="$1"
+    local raw="${2//,/ }"
+    local -n target="$target_name"
+    local value
+
+    for value in $raw; do
+        target+=("$value")
+    done
 }
 
 parse_args() {
     while (($#)); do
         case "$1" in
-            --preset)
-                [[ $# -ge 2 ]] || die "--preset requires a preset name"
-                PRESET="$2"
-                shift 2
+            --all)
+                SELECT_ALL="yes"
+                shift
                 ;;
             --minimal)
-                PRESET="minimal"
+                MINIMAL_ONLY="yes"
                 shift
                 ;;
-            --desktop)
-                PRESET="desktop"
-                shift
+            --category|--categories)
+                [[ $# -ge 2 ]] || die "$1 requires a category name"
+                split_requested_values REQUESTED_CATEGORIES "$2"
+                shift 2
                 ;;
-            --full)
-                PRESET="full"
-                shift
+            --app|--apps)
+                [[ $# -ge 2 ]] || die "$1 requires an app key"
+                split_requested_values REQUESTED_APPS "$2"
+                shift 2
                 ;;
-            --list-presets|--list-profiles)
-                list_presets
+            --list-categories|--list-apps)
+                list_categories
                 exit 0
+                ;;
+            --dry-run|--print-plan)
+                DRY_RUN="yes"
+                shift
                 ;;
             --repo)
                 [[ $# -ge 2 ]] || die "--repo requires a URL"
@@ -298,59 +350,75 @@ use_interactive_mode() {
     [[ -t 0 ]]
 }
 
-enable_desktop() {
-    SELECT_DESKTOP="yes"
-    SELECT_YAZI="yes"
-    SELECT_FLATPAKS="yes"
+find_item_index() {
+    local key="$1"
+    local index
+
+    for index in "${!ITEM_KEYS[@]}"; do
+        if [[ "${ITEM_KEYS[$index]}" == "$key" ]]; then
+            printf '%s\n' "$index"
+            return 0
+        fi
+    done
+
+    return 1
 }
 
-set_preset() {
-    local preset="$1"
+select_item_by_key() {
+    local key="$1"
+    find_item_index "$key" >/dev/null || die "Unknown app key: $key"
+    append_unique SELECTED_ITEMS "$key"
+}
 
-    SELECT_DESKTOP="no"
-    SELECT_YAZI="no"
-    SELECT_DEV="no"
-    SELECT_CREATOR="no"
-    SELECT_GAMING="no"
-    SELECT_VIRT="no"
-    SELECT_PRIVACY="no"
-    SELECT_FLATPAKS="no"
+select_category_by_slug() {
+    local slug
+    slug="$(normalize_category "$1")"
 
-    case "$preset" in
-        minimal)
-            ;;
-        desktop)
-            enable_desktop
-            SELECT_PRIVACY="yes"
-            ;;
-        creator)
-            enable_desktop
-            SELECT_CREATOR="yes"
-            SELECT_PRIVACY="yes"
-            ;;
-        gaming)
-            enable_desktop
-            SELECT_GAMING="yes"
-            SELECT_PRIVACY="yes"
-            ;;
-        virt|virtualization)
-            enable_desktop
-            SELECT_VIRT="yes"
-            SELECT_PRIVACY="yes"
-            PRESET="virt"
-            ;;
-        full)
-            enable_desktop
-            SELECT_DEV="yes"
-            SELECT_CREATOR="yes"
-            SELECT_GAMING="yes"
-            SELECT_VIRT="yes"
-            SELECT_PRIVACY="yes"
-            ;;
-        *)
-            die "Unknown preset: $preset"
-            ;;
-    esac
+    contains "$slug" "${CATEGORY_SLUGS[@]}" || die "Unknown category: $1"
+
+    local index
+    for index in "${!ITEM_KEYS[@]}"; do
+        [[ "${ITEM_CATEGORIES[$index]}" == "$slug" ]] || continue
+        select_item_by_key "${ITEM_KEYS[$index]}"
+    done
+}
+
+select_all_items() {
+    local key
+    for key in "${ITEM_KEYS[@]}"; do
+        select_item_by_key "$key"
+    done
+}
+
+selection_requested() {
+    is_yes "$SELECT_ALL" && return 0
+    is_yes "$MINIMAL_ONLY" && return 0
+    ((${#REQUESTED_CATEGORIES[@]} > 0)) && return 0
+    ((${#REQUESTED_APPS[@]} > 0)) && return 0
+    return 1
+}
+
+apply_requested_selections() {
+    if is_yes "$MINIMAL_ONLY"; then
+        if is_yes "$SELECT_ALL" || ((${#REQUESTED_CATEGORIES[@]} > 0)) || ((${#REQUESTED_APPS[@]} > 0)); then
+            die "--minimal cannot be combined with --all, --category, or --app"
+        fi
+
+        return 0
+    fi
+
+    if is_yes "$SELECT_ALL"; then
+        select_all_items
+    fi
+
+    local category app
+    for category in "${REQUESTED_CATEGORIES[@]}"; do
+        select_category_by_slug "$category"
+    done
+
+    for app in "${REQUESTED_APPS[@]}"; do
+        select_item_by_key "$app"
+    done
 }
 
 ask_yes_no() {
@@ -370,112 +438,181 @@ ask_yes_no() {
     [[ "$reply" =~ ^[Yy]([Ee][Ss])?$ ]]
 }
 
-prompt_for_preset() {
+prompt_for_category() {
+    local category="$1"
+    local title
+    title="$(category_title "$category")"
+
+    local indices=()
+    local index
+    for index in "${!ITEM_KEYS[@]}"; do
+        [[ "${ITEM_CATEGORIES[$index]}" == "$category" ]] || continue
+        indices+=("$index")
+    done
+
+    ((${#indices[@]} > 0)) || return 0
+
+    printf '\n%s\n' "$title"
+
+    local number item_index
+    number=1
+    for item_index in "${indices[@]}"; do
+        printf '  %2d) %-16s %s\n' "$number" "${ITEM_KEYS[$item_index]}" "${ITEM_LABELS[$item_index]}"
+        number=$((number + 1))
+    done
+
+    printf 'Select numbers, keys, "all", or press Enter for none.\n'
+
+    local reply token selected_index
+    read -r -p "Selection: " reply
+    reply="${reply//,/ }"
+
+    [[ -z "$reply" || "$reply" == "none" || "$reply" == "n" || "$reply" == "skip" ]] && return 0
+
+    if [[ "$reply" == "all" || "$reply" == "a" || "$reply" == "*" ]]; then
+        for item_index in "${indices[@]}"; do
+            select_item_by_key "${ITEM_KEYS[$item_index]}"
+        done
+        return 0
+    fi
+
+    for token in $reply; do
+        if [[ "$token" =~ ^[0-9]+$ ]]; then
+            if ((token < 1 || token > ${#indices[@]})); then
+                die "Invalid selection '$token' in $title"
+            fi
+
+            selected_index="${indices[$((token - 1))]}"
+            select_item_by_key "${ITEM_KEYS[$selected_index]}"
+        else
+            select_item_by_key "$token"
+        fi
+    done
+}
+
+prompt_for_apps() {
     printf '%s\n' \
         "" \
-        "Choose an install preset:" \
-        "  1) minimal  - Base CLI tools, chezmoi, and dotfiles" \
-        "  2) desktop  - Hyprland desktop, audio, Yazi, Flatpak basics" \
-        "  3) creator  - Desktop plus creative apps" \
-        "  4) gaming   - Desktop plus gaming apps" \
-        "  5) virt     - Desktop plus QEMU/libvirt" \
-        "  6) full     - Everything"
+        "Base CLI tools and chezmoi are always installed." \
+        "Now choose optional apps and bundles by category."
 
-    local choice
-    read -r -p "Preset [2]: " choice
-    case "${choice:-2}" in
-        1|minimal) PRESET="minimal" ;;
-        2|desktop) PRESET="desktop" ;;
-        3|creator) PRESET="creator" ;;
-        4|gaming) PRESET="gaming" ;;
-        5|virt|virtualization) PRESET="virt" ;;
-        6|full) PRESET="full" ;;
-        *) die "Unknown preset selection: $choice" ;;
-    esac
+    if ask_yes_no "Install all optional apps?" "no"; then
+        select_all_items
+        return 0
+    fi
+
+    local category
+    for category in "${CATEGORY_SLUGS[@]}"; do
+        prompt_for_category "$category"
+    done
 }
 
-customize_install() {
-    ask_yes_no "Customize package groups?" "no" || return 0
+choose_apps() {
+    apply_requested_selections
 
-    ask_yes_no "Install Hyprland desktop stack?" "$SELECT_DESKTOP" && SELECT_DESKTOP="yes" || SELECT_DESKTOP="no"
-    ask_yes_no "Install Yazi and preview tools?" "$SELECT_YAZI" && SELECT_YAZI="yes" || SELECT_YAZI="no"
-    ask_yes_no "Install development tools?" "$SELECT_DEV" && SELECT_DEV="yes" || SELECT_DEV="no"
-    ask_yes_no "Install creator tools and media Flatpaks?" "$SELECT_CREATOR" && SELECT_CREATOR="yes" || SELECT_CREATOR="no"
-    ask_yes_no "Install gaming tools and gaming Flatpaks?" "$SELECT_GAMING" && SELECT_GAMING="yes" || SELECT_GAMING="no"
-    ask_yes_no "Install virtualization tools?" "$SELECT_VIRT" && SELECT_VIRT="yes" || SELECT_VIRT="no"
-    ask_yes_no "Install privacy/security extras?" "$SELECT_PRIVACY" && SELECT_PRIVACY="yes" || SELECT_PRIVACY="no"
-    ask_yes_no "Install Flatpak app bundle?" "$SELECT_FLATPAKS" && SELECT_FLATPAKS="yes" || SELECT_FLATPAKS="no"
-}
+    if is_yes "$MINIMAL_ONLY"; then
+        return 0
+    fi
 
-choose_install_shape() {
-    if [[ -z "$PRESET" ]]; then
+    if ! selection_requested; then
         if use_interactive_mode; then
-            prompt_for_preset
+            prompt_for_apps
         else
-            PRESET="desktop"
-            warn "No preset provided and stdin is not interactive. Using desktop preset."
+            warn "No app selections provided and stdin is not interactive. Installing base tools only."
         fi
     fi
+}
 
-    set_preset "$PRESET"
-
-    if use_interactive_mode; then
-        customize_install
-    fi
+selected_item_label() {
+    local key="$1"
+    local index
+    index="$(find_item_index "$key")"
+    printf '%s\n' "${ITEM_LABELS[$index]}"
 }
 
 build_package_lists() {
     PACMAN_PACKAGES=()
     AUR_PACKAGES=()
     FLATPAK_APPS=()
+    NEEDS_VIRT_SETUP="no"
 
     append_unique PACMAN_PACKAGES "${BASE_PACKAGES[@]}"
 
-    is_yes "$SELECT_DESKTOP" && append_unique PACMAN_PACKAGES "${DESKTOP_PACKAGES[@]}"
-    is_yes "$SELECT_YAZI" && append_unique PACMAN_PACKAGES "${YAZI_PACKAGES[@]}"
-    is_yes "$SELECT_DEV" && append_unique PACMAN_PACKAGES "${DEV_PACKAGES[@]}"
-    is_yes "$SELECT_CREATOR" && append_unique PACMAN_PACKAGES "${CREATOR_PACKAGES[@]}"
-    is_yes "$SELECT_GAMING" && append_unique PACMAN_PACKAGES "${GAMING_PACKAGES[@]}"
-    is_yes "$SELECT_VIRT" && append_unique PACMAN_PACKAGES "${VIRT_PACKAGES[@]}"
-    is_yes "$SELECT_PRIVACY" && append_unique PACMAN_PACKAGES "${PRIVACY_PACKAGES[@]}"
+    local key index
+    for key in "${SELECTED_ITEMS[@]}"; do
+        index="$(find_item_index "$key")"
+        append_words PACMAN_PACKAGES "${ITEM_PACMAN[$index]}"
 
-    if is_yes "$RUN_FLATPAK" && { is_yes "$SELECT_FLATPAKS" || is_yes "$SELECT_CREATOR" || is_yes "$SELECT_GAMING"; }; then
+        if is_yes "$RUN_AUR"; then
+            append_words AUR_PACKAGES "${ITEM_AUR[$index]}"
+        fi
+
+        if is_yes "$RUN_FLATPAK"; then
+            append_words FLATPAK_APPS "${ITEM_FLATPAK[$index]}"
+        fi
+
+        if [[ "${ITEM_POST[$index]}" == *"virt"* ]]; then
+            NEEDS_VIRT_SETUP="yes"
+        fi
+    done
+
+    if ((${#FLATPAK_APPS[@]} > 0)); then
         append_unique PACMAN_PACKAGES flatpak flatseal
-        append_unique FLATPAK_APPS "${FLATPAK_BASE_APPS[@]}"
+    fi
+}
+
+print_selected_items() {
+    if ((${#SELECTED_ITEMS[@]} == 0)); then
+        printf 'Selected optional apps: none\n'
+        return
     fi
 
-    is_yes "$SELECT_YAZI" && append_unique AUR_PACKAGES "${AUR_MEDIA_PACKAGES[@]}"
-    is_yes "$SELECT_PRIVACY" && append_unique AUR_PACKAGES "${AUR_PRIVACY_PACKAGES[@]}"
+    printf 'Selected optional apps:\n'
+    local key
+    for key in "${SELECTED_ITEMS[@]}"; do
+        printf '  - %-16s %s\n' "$key" "$(selected_item_label "$key")"
+    done
+}
 
-    is_yes "$SELECT_CREATOR" && append_unique FLATPAK_APPS "${FLATPAK_CREATOR_APPS[@]}"
-    is_yes "$SELECT_GAMING" && append_unique FLATPAK_APPS "${FLATPAK_GAMING_APPS[@]}"
+selection_has_payload() {
+    local payload_name="$1"
+    local key index
 
-    if ! is_yes "$RUN_AUR"; then
-        AUR_PACKAGES=()
-    fi
+    for key in "${SELECTED_ITEMS[@]}"; do
+        index="$(find_item_index "$key")"
+        case "$payload_name" in
+            aur)
+                [[ -n "${ITEM_AUR[$index]}" ]] && return 0
+                ;;
+            flatpak)
+                [[ -n "${ITEM_FLATPAK[$index]}" ]] && return 0
+                ;;
+        esac
+    done
 
-    if ! is_yes "$RUN_FLATPAK"; then
-        FLATPAK_APPS=()
-    fi
+    return 1
 }
 
 print_config() {
     log "Install configuration"
-    printf 'Preset: %s\n' "$PRESET"
     printf 'Dotfiles repo: %s\n' "$DOTFILES_REPO"
     printf 'Apply dotfiles: %s\n' "$APPLY_DOTFILES"
-    printf 'Desktop stack: %s\n' "$SELECT_DESKTOP"
-    printf 'Yazi tools: %s\n' "$SELECT_YAZI"
-    printf 'Development tools: %s\n' "$SELECT_DEV"
-    printf 'Creator tools: %s\n' "$SELECT_CREATOR"
-    printf 'Gaming tools: %s\n' "$SELECT_GAMING"
-    printf 'Virtualization tools: %s\n' "$SELECT_VIRT"
-    printf 'Privacy extras: %s\n' "$SELECT_PRIVACY"
-    printf 'Flatpak apps: %s\n' "$RUN_FLATPAK"
+    printf 'Install AUR selections: %s\n' "$RUN_AUR"
+    printf 'Install Flatpak selections: %s\n' "$RUN_FLATPAK"
+    printf 'Setup virtualization services: %s\n' "$RUN_VIRT"
     printf 'DNS mode: %s\n' "$DNS_MODE"
+    print_selected_items
     printf 'Pacman packages: %s\n' "${#PACMAN_PACKAGES[@]}"
     printf 'AUR packages: %s\n' "${#AUR_PACKAGES[@]}"
-    printf 'Flatpak apps selected: %s\n' "${#FLATPAK_APPS[@]}"
+    printf 'Flatpak apps: %s\n' "${#FLATPAK_APPS[@]}"
+
+    if ! is_yes "$RUN_AUR" && selection_has_payload aur; then
+        printf 'Note: AUR-backed selections are skipped because RUN_AUR is disabled.\n'
+    fi
+
+    if ! is_yes "$RUN_FLATPAK" && selection_has_payload flatpak; then
+        printf 'Note: Flatpak-backed selections are skipped because RUN_FLATPAK is disabled.\n'
+    fi
 }
 
 confirm_install() {
@@ -500,7 +637,7 @@ install_pacman_packages() {
     log "Updating Arch packages"
     sudo pacman -Syu --noconfirm
 
-    log "Installing Pacman package groups"
+    log "Installing Pacman packages"
     sudo pacman -S --needed --noconfirm "${PACMAN_PACKAGES[@]}"
 }
 
@@ -566,7 +703,7 @@ apply_dotfiles() {
 }
 
 setup_virtualization() {
-    if ! is_yes "$SELECT_VIRT" || ! is_yes "$RUN_VIRT"; then
+    if ! is_yes "$NEEDS_VIRT_SETUP" || ! is_yes "$RUN_VIRT"; then
         log "Skipping virtualization setup"
         return
     fi
@@ -626,10 +763,20 @@ configure_dns() {
 }
 
 main() {
+    define_catalog
     parse_args "$@"
+
+    if is_yes "$DRY_RUN"; then
+        choose_apps
+        build_package_lists
+        print_config
+        log "Dry run complete. No changes were made."
+        exit 0
+    fi
+
     require_arch_linux
     resolve_target_user
-    choose_install_shape
+    choose_apps
     build_package_lists
     print_config
     confirm_install
