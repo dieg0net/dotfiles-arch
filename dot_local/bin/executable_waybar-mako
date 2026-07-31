@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+tooltip='Left: restore last notification\nMiddle: toggle do not disturb\nRight: dismiss all'
+
+if makoctl mode 2>/dev/null | grep -qx 'do-not-disturb'; then
+  printf '{"text":"󰂛","class":"dnd","tooltip":"Do not disturb enabled\\n%s"}\n' "$tooltip"
+elif makoctl list 2>/dev/null | grep -q '^Notification'; then
+  printf '{"text":"󱅫","class":"active","tooltip":"Notifications visible\\n%s"}\n' "$tooltip"
+elif makoctl history 2>/dev/null | grep -q '^Notification'; then
+  printf '{"text":"󱅫","class":"history","tooltip":"Notification history available\\n%s"}\n' "$tooltip"
+else
+  printf '{"text":"󰂚","class":"empty","tooltip":"No notifications\\n%s"}\n' "$tooltip"
+fi

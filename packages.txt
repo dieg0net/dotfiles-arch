@@ -1,0 +1,29 @@
+# Official Arch packages
+hyprland
+hyprpaper
+hypridle
+hyprlock
+hyprpolkitagent
+waybar
+mako
+swayosd
+kitty
+ttf-jetbrains-mono-nerd
+starship
+neovim
+wl-clipboard
+grim
+slurp
+playerctl
+pavucontrol
+power-profiles-daemon
+network-manager-applet
+blueman
+dolphin
+okular
+gwenview
+chezmoi
+
+# AUR packages
+vicinae-bin
+clipse

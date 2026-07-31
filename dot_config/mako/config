@@ -1,0 +1,44 @@
+# Understory — Mako
+font=JetBrainsMono Nerd Font 12
+background-color=#181b16f7
+text-color=#d8d2c4ff
+width=320
+height=130
+outer-margin=8,10,0,0
+margin=6
+padding=14
+border-size=2
+border-color=#66845aff
+border-radius=12
+progress-color=over #8ead7388
+icons=1
+max-icon-size=48
+icon-border-radius=9
+markup=1
+actions=1
+format=<span color="#8ead73"><b>%s</b></span>\n%b
+text-alignment=left
+default-timeout=6000
+ignore-timeout=1
+max-visible=4
+max-history=20
+history=1
+sort=-time
+group-by=app-name
+anchor=top-right
+layer=top
+on-button-left=invoke-default-action
+on-button-middle=dismiss
+on-button-right=dismiss-all
+
+[urgency=low]
+border-color=#2b3127ff
+text-color=#8f9487ff
+default-timeout=4000
+
+[urgency=critical]
+border-color=#b8645bff
+default-timeout=0
+
+[mode=do-not-disturb]
+invisible=1

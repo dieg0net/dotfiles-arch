@@ -1,0 +1,60 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+palette = "understory"
+add_newline = true
+command_timeout = 800
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+$character"""
+
+[palettes.understory]
+void       = "#11130F"
+background = "#181B16"
+surface    = "#20251D"
+overlay    = "#2B3127"
+foreground = "#D8D2C4"
+muted      = "#8F9487"
+wood_dark  = "#4A3829"
+wood       = "#76573A"
+wood_light = "#A47B50"
+plant_dark = "#3F5B3A"
+plant      = "#66845A"
+plant_light = "#8EAD73"
+red        = "#B8645B"
+yellow     = "#C59B58"
+cyan       = "#6E9B85"
+
+[directory]
+style = "bold plant_light"
+home_symbol = "󱔐"
+read_only = " 󰌾"
+read_only_style = "red"
+truncation_length = 4
+truncate_to_repo = true
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+[git_branch]
+symbol = " "
+style = "bold plant_light"
+format = "[$symbol$branch(:$remote_branch)]($style) "
+
+[git_status]
+style = "yellow"
+format = "([$all_status$ahead_behind]($style) )"
+
+[fill]
+symbol = " "
+
+[cmd_duration]
+min_time = 2000
+style = "muted"
+format = "[took $duration]($style)"
+
+[character]
+success_symbol = "[❯](bold plant_light)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold plant_light)"

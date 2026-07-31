@@ -1,157 +1,117 @@
-# Glow Up Arch
+# 󱔐 Understory
 
-An opinionated Arch Linux bootstrap that turns a minimal install into a personalized desktop.
+<p align="center">
+  <em>A quiet Arch Linux rice inspired by dark timber, forest floors, and the green that grows underneath.</em>
+</p>
 
-This is not a full ISO yet. Think of it as the first step toward a tiny distro: install Arch, boot into your new system, then run one script that lets you choose exactly which apps and bundles you want.
+<p align="center">
+  <img alt="Arch Linux" src="https://img.shields.io/badge/Arch_Linux-181B16?style=for-the-badge&logo=archlinux&logoColor=8EAD73">
+  <img alt="Hyprland" src="https://img.shields.io/badge/Hyprland-20251D?style=for-the-badge&logo=wayland&logoColor=89B49B">
+  <img alt="Chezmoi" src="https://img.shields.io/badge/Chezmoi-4A3829?style=for-the-badge&logo=gnu-bash&logoColor=D8D2C4">
+</p>
 
-## What It Does
+![Understory desktop](assets/screenshots/desktop.png)
 
-- Installs a clean base set of CLI tools and `chezmoi`.
-- Uses [chezmoi](https://www.chezmoi.io/) to manage and apply dotfiles.
-- Lets you pick optional apps from categories instead of forcing a profile.
-- Supports interactive installs for fresh machines.
-- Supports unattended installs with category and app keys.
-- Keeps risky system changes, like DNS, explicit instead of hidden.
+## The rice
 
-## Quick Start
+Understory is cohesive before it is flashy. One earthy palette flows through
+the compositor, terminal, launcher, editor, notifications, lock screen, OSD,
+GTK applications, and KDE applications.
 
-After a successful minimal Arch install, log in as your normal user with sudo access, then run:
-
-```bash
-cd /tmp
-curl -fsSLO https://raw.githubusercontent.com/dieg0net/dotfiles-arch/main/install.sh
-chmod +x install.sh
-./install.sh
-```
-
-The installer always installs the base tools. After that, it walks through categories and lets you choose optional apps by number, key, `all`, or Enter for none.
-
-## Categories
-
-| Category | Key | Examples |
-| --- | --- | --- |
-| Desktop & Wayland | `desktop` | Hyprland, Waybar, Wofi, Kitty, Dolphin, screenshots, fonts |
-| Audio | `audio` | PipeWire, Pavucontrol |
-| Terminal & Files | `terminal` | Yazi, preview helpers, Kew |
-| Browsers & Notes | `browsers` | LibreWolf, Obsidian |
-| Development | `development` | GitHub CLI, Go, Node.js, Python, Rust |
-| Creator Apps | `creative` | GIMP, Inkscape, OBS, Kdenlive |
-| Gaming | `gaming` | Steam, Bottles, Wine, Gamescope, MangoHud |
-| Virtualization | `virtualization` | QEMU, libvirt, virt-manager |
-| Privacy & Security | `security` | UFW package |
-
-List the current categories and app keys:
-
-```bash
-./install.sh --list-categories
-```
-
-Preview an install plan without changing the system:
-
-```bash
-./install.sh --dry-run --category desktop --app steam --non-interactive
-```
-
-## Unattended Examples
-
-Install only base tools and dotfiles:
-
-```bash
-./install.sh --minimal --non-interactive --no-dns
-```
-
-Install all optional apps:
-
-```bash
-./install.sh --all --non-interactive
-```
-
-Install a desktop plus development tools:
-
-```bash
-./install.sh --category desktop --category audio --category development --non-interactive
-```
-
-Install selected apps by key:
-
-```bash
-./install.sh --app hyprland --app waybar --app kitty --app librewolf --app obsidian
-```
-
-Install gaming apps but skip Flatpak apps:
-
-```bash
-./install.sh --category gaming --skip-flatpak --non-interactive
-```
-
-Use SSH for the dotfiles checkout:
-
-```bash
-./install.sh --category desktop --ssh
-```
-
-Use a different chezmoi source repo:
-
-```bash
-./install.sh --repo https://github.com/yourname/dotfiles.git
-```
-
-## Options
-
-| Option | Description |
+| Layer | Choice |
 | --- | --- |
-| `--all` | Select every optional app and bundle |
-| `--minimal` | Install only base tools and dotfiles |
-| `--category NAME` | Select every app in a category; repeatable |
-| `--app KEY` | Select one app or bundle by key; repeatable |
-| `--list-categories` | Show categories, app keys, and labels |
-| `--dry-run` | Print the install plan without changing the system |
-| `--non-interactive` | Skip prompts and use explicit selections |
-| `--repo URL` | Override the chezmoi dotfiles repo |
-| `--ssh` | Use `git@github.com:dieg0net/dotfiles-arch.git` for chezmoi |
-| `--skip-dotfiles` | Install `chezmoi` but do not apply dotfiles |
-| `--skip-aur` | Skip `paru` and AUR packages |
-| `--skip-flatpak` | Skip Flatpak setup and Flatpak apps |
-| `--skip-virt` | Skip libvirt service/group setup |
-| `--set-dns` | Configure NetworkManager DNS without prompting |
-| `--no-dns` | Skip DNS configuration |
+| Compositor | Hyprland 0.56+ using the modern Lua API |
+| Bar | Waybar with workspaces, privacy capture, media, power, and Mako state |
+| Launcher | Vicinae |
+| Terminal | Kitty + JetBrainsMono Nerd Font |
+| Shell | Bash + Starship |
+| Editor | LazyVim / Neovim |
+| Notifications | Mako |
+| OSD | SwayOSD |
+| Files | Dolphin + Gwenview + Okular |
+| Clipboard | Clipse |
+| Dotfiles | Chezmoi |
 
-## Environment Overrides
+<table>
+  <tr>
+    <td width="50%"><img alt="Understory Vicinae launcher" src="assets/screenshots/launcher.png"></td>
+    <td width="50%"><img alt="Understory LazyVim editor" src="assets/screenshots/editor.png"></td>
+  </tr>
+  <tr>
+    <td align="center"><sub>Vicinae command palette</sub></td>
+    <td align="center"><sub>LazyVim with the shared palette</sub></td>
+  </tr>
+</table>
 
-Every major installer choice can also be driven by environment variables:
+## Small details
+
+- `Super + D` opens the launcher.
+- `Super + V` opens searchable text and image clipboard history.
+- `Super + Shift + S` selects an area and copies it without creating a file.
+- Volume left-click opens the mixer; middle-click mutes; right-click chooses an output.
+- Waybar shows microphone and screen-sharing capture only while active.
+- Idle behavior dims, locks, powers off the panel, then suspends only on battery.
+- The wallpaper and every color-bearing configuration are included.
+
+## Install
+
+> [!IMPORTANT]
+> This is an opinionated post-install for Arch Linux, not an unattended OS
+> installer. Read the script before running it and start from a working user
+> account with `sudo` access.
 
 ```bash
-INTERACTIVE=no DNS_MODE=no ./install.sh --category gaming
+git clone https://github.com/dieg0net/dotfiles-arch.git
+cd dotfiles-arch
+./install.sh --category desktop --category audio
 ```
 
-Supported variables:
+For only the managed files on an already configured system:
+
+```bash
+chezmoi init --apply dieg0net
+```
+
+Preview the installer without changing anything:
+
+```bash
+./install.sh --dry-run --category desktop --category audio --non-interactive
+```
+
+The installer remains category-driven, so development, creator, gaming,
+virtualization, and security tools stay optional. Run `./install.sh
+--list-categories` for the complete catalog. The original pre-Understory
+installer is preserved at `scripts/glow-up-arch.sh`.
+
+## Layout
 
 ```text
-DOTFILES_REPO
-APPLY_DOTFILES
-RUN_AUR
-RUN_FLATPAK
-RUN_VIRT
-DNS_MODE
-DNS_SERVERS
-NM_CONNECTION
-INTERACTIVE
+dot_config/              application configuration managed by Chezmoi
+dot_local/bin/           small desktop helpers
+Pictures/Wallpapers/     the Understory wallpaper
+assets/screenshots/      repository showcase images
+install.sh               interactive Arch post-install
+packages.txt             concise package reference
 ```
 
-## Philosophy
+The Framework Laptop display declaration is near the top of
+`dot_config/hypr/hyprland.lua`; change the output, resolution, refresh rate, or
+scale for another machine.
 
-Glow Up Arch should feel like a distro without taking away what makes Arch fun:
+## Palette
 
-- Minimal first, personalized second.
-- App choices over mystery profiles.
-- Dotfiles managed as source, not copied by hand.
-- Useful defaults that can still be skipped.
-- One install path for fresh machines, rebuilds, and experiments.
+| Role | Hex |
+| --- | --- |
+| Forest black | `#181B16` |
+| Bark surface | `#20251D` |
+| Moss | `#66845A` |
+| New growth | `#8EAD73` |
+| Dark wood | `#4A3829` |
+| Warm wood | `#A47B50` |
+| Linen | `#D8D2C4` |
 
-## Roadmap
+## Privacy
 
-- More categories for laptops, audio production, and streaming.
-- A proper TUI installer.
-- Post-install health checks.
-- Optional disk/bootstrap automation before the post-install script.
-- Eventually, a real ISO or `archinstall` profile.
+Browser profiles, GitHub authentication, clipboard contents, shell history,
+cookies, application databases, and caches are deliberately excluded. The
+repository contains configuration—not personal state.

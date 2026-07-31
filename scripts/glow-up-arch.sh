@@ -124,14 +124,15 @@ add_item() {
 
 define_catalog() {
     add_category "desktop" "Desktop & Wayland"
-    add_item "desktop" "hyprland" "Hyprland session, lock screen, idle policy, wallpaper, portals, and authentication" "hyprland hyprpaper hypridle hyprlock hyprpolkitagent xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland" "" "" ""
+    add_item "desktop" "hyprland" "Hyprland session and portals" "hyprland xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland" "" "" ""
     add_item "desktop" "waybar" "Waybar status bar" "waybar" "" "" ""
-    add_item "desktop" "vicinae" "Vicinae launcher and command palette" "" "vicinae-bin" "" ""
+    add_item "desktop" "wofi" "Wofi app launcher" "wofi" "" "" ""
     add_item "desktop" "kitty" "Kitty terminal" "kitty" "" "" ""
-    add_item "desktop" "dolphin" "Dolphin, Gwenview, and Okular" "dolphin gwenview okular ark" "" "" ""
+    add_item "desktop" "dolphin" "Dolphin graphical file manager" "dolphin" "" "" ""
     add_item "desktop" "mako" "Mako notifications" "mako" "" "" ""
-    add_item "desktop" "clipboard" "Screenshots and clipboard history" "grim slurp wl-clipboard" "clipse" "" ""
-    add_item "desktop" "desktop-controls" "OSD, power profiles, brightness, media, Bluetooth, network, and audio controls" "swayosd brightnessctl power-profiles-daemon blueman network-manager-applet pavucontrol playerctl" "" "" ""
+    add_item "desktop" "clipboard" "Screenshots and Wayland clipboard tools" "grim slurp wl-clipboard" "" "" ""
+    add_item "desktop" "hyprlock" "Hyprlock screen locker" "hyprlock" "" "" ""
+    add_item "desktop" "desktop-controls" "Brightness, media, tray, and audio controls" "brightnessctl network-manager-applet pavucontrol playerctl" "" "" ""
     add_item "desktop" "fonts" "JetBrainsMono Nerd Font" "ttf-jetbrains-mono-nerd" "" "" ""
 
     add_category "audio" "Audio"

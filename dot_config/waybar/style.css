@@ -1,0 +1,88 @@
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 13px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: rgba(24, 27, 22, 0.94);
+  color: #d8d2c4;
+  border: 1px solid #2b3127;
+  border-radius: 13px;
+}
+
+#custom-understory {
+  color: #8ead73;
+  font-size: 20px;
+  padding: 0 14px 0 12px;
+}
+
+#workspaces button {
+  color: #8f9487;
+  min-width: 32px;
+  padding: 0;
+  margin: 5px 2px;
+  border-radius: 8px;
+}
+
+#workspaces button.active {
+  color: #11130f;
+  background: #8ead73;
+}
+
+#workspaces button:hover {
+  color: #d8d2c4;
+  background: #4a3829;
+}
+
+#window { color: #a47b50; padding-left: 14px; }
+#window.empty { padding: 0; }
+#clock {
+  color: #d8d2c4;
+  background: #20251d;
+  border: 1px solid #2b3127;
+  border-radius: 9px;
+  padding: 0 13px;
+  margin: 5px 0;
+  font-weight: 600;
+}
+#mpris, #tray, #bluetooth, #network, #pulseaudio, #privacy, #power-profiles-daemon, #battery, #custom-notifications, #custom-power {
+  padding: 0 9px;
+  margin: 5px 1px;
+  border-radius: 8px;
+}
+#mpris { color: #88768f; }
+#bluetooth { color: #668f92; }
+#network { color: #6e9b85; }
+#pulseaudio { color: #a47b50; }
+#privacy { color: #c59b58; }
+#privacy-item.audio-in { color: #c59b58; }
+#privacy-item.screenshare { color: #b8645b; }
+#power-profiles-daemon { color: #8ead73; }
+#power-profiles-daemon.performance { color: #c59b58; }
+#power-profiles-daemon.power-saver { color: #89b49b; }
+#battery { color: #8ead73; }
+#battery.warning { color: #c59b58; }
+#battery.critical { color: #b8645b; }
+#custom-notifications { color: #66845a; }
+#custom-notifications.active, #custom-notifications.history { color: #8ead73; }
+#custom-notifications.dnd { color: #8f9487; }
+#custom-power {
+  color: #b8645b;
+  font-size: 15px;
+  margin-right: 7px;
+}
+#mpris:hover, #bluetooth:hover, #network:hover, #pulseaudio:hover, #privacy:hover, #power-profiles-daemon:hover, #battery:hover,
+#custom-notifications:hover, #custom-power:hover {
+  background: #2b3127;
+}
+#battery.critical:not(.charging) {
+  background: #b8645b;
+  color: #11130f;
+}
+tooltip {
+  background: #20251d;
+  color: #d8d2c4;
+  border: 1px solid #66845a;
+  border-radius: 8px;
+}
