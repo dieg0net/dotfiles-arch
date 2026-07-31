@@ -9,8 +9,7 @@
 </p>
 
 <p align="center">
-  <strong>Cohesive by design. Expressive on purpose.</strong><br>
-  <sub>Arch, Hyprland, and a tropical pulse.</sub>
+  <strong>A modern Arch desktop styled with Understory.</strong>
 </p>
 
 ![The complete Arch and Hyprland desktop](assets/screenshots/desktop.png)
