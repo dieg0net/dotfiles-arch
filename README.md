@@ -1,4 +1,4 @@
-# 󱔐 Understory
+# Understory
 
 <p align="center">
   <em>A quiet Arch Linux rice inspired by dark timber, forest floors, and the green that grows underneath.</em>
