@@ -9,19 +9,19 @@
 </p>
 
 <p align="center">
-  <strong>A calm, cohesive desktop built for long sessions.</strong><br>
-  <sub>One palette from the first unlock to the last terminal.</sub>
+  <strong>Cohesive by design. Expressive on purpose.</strong><br>
+  <sub>Arch, Hyprland, and a tropical pulse.</sub>
 </p>
 
 ![The complete Arch and Hyprland desktop](assets/screenshots/desktop.png)
 
 ## The desktop
 
-This setup is cohesive before it is flashy. Its visual layer is built with the
-Understory theme: jungle-shadow blacks leave room to focus, dark hardwood adds
-warmth, and fern and climbing-vine greens carry state and motion. That language
-flows through the compositor, terminal, launcher, editor, notifications, lock
-screen, OSD, GTK, and KDE.
+This setup is cohesive and expressive in equal measure. The Understory theme
+ties it together with jungle-shadow blacks, dark hardwood warmth, and fern and
+climbing-vine greens that carry state and motion. That visual language flows
+through the compositor, terminal, launcher, editor, notifications, lock screen,
+OSD, GTK, and KDE.
 
 The canonical colors and reusable exports live in the standalone
 [Understory palette](https://github.com/dieg0net/understory) project.
