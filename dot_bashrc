@@ -1,0 +1,20 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+
+# Use Starship when installed, with a simple prompt as a fallback.
+if command -v starship &>/dev/null; then
+    eval "$(starship init bash)"
+else
+    PS1='[\u@\h \W]\$ '
+fi
+
+# >>> Codex installer >>>
+export PATH="$HOME/.local/bin:$PATH"
+# <<< Codex installer <<<

@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+choice=$(printf '%s\n' \
+  '󰌾  Lock' \
+  '󰤄  Suspend' \
+  '󰍃  Log out' \
+  '󰜉  Reboot' \
+  '󰐥  Shut down' |
+  vicinae dmenu --navigation-title='Session' --placeholder='Choose an action' --no-section --no-quick-look --width=460 --height=430)
+
+case "$choice" in
+  *Lock) hyprlock ;;
+  *Suspend)
+    loginctl lock-session
+    sleep 0.4
+    systemctl suspend
+    ;;
+  *"Log out") hyprctl eval 'hl.dispatch(hl.dsp.exit())' ;;
+  *Reboot)
+    confirm=$(printf '%s\n' 'No, go back' 'Yes, reboot' |
+      vicinae dmenu --navigation-title='Confirm reboot' --no-section --no-quick-look --width=420 --height=260)
+    [[ "$confirm" == 'Yes, reboot' ]] && systemctl reboot
+    ;;
+  *"Shut down")
+    confirm=$(printf '%s\n' 'No, go back' 'Yes, shut down' |
+      vicinae dmenu --navigation-title='Confirm shutdown' --no-section --no-quick-look --width=420 --height=260)
+    [[ "$confirm" == 'Yes, shut down' ]] && systemctl poweroff
+    ;;
+esac

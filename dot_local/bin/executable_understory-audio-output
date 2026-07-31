@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+default_sink=$(pactl get-default-sink)
+declare -a sink_names=()
+declare -a menu_items=()
+name=
+
+while IFS= read -r line; do
+  case "$line" in
+    $'\tName: '*) name=${line#*Name: } ;;
+    $'\tDescription: '*)
+      description=${line#*Description: }
+      [[ -n "$name" ]] || continue
+      sink_names+=("$name")
+      if [[ "$name" == "$default_sink" ]]; then
+        menu_items+=("󰓃  $description  ·  current")
+      else
+        menu_items+=("󰓃  $description")
+      fi
+      ;;
+  esac
+done < <(pactl list sinks)
+
+((${#menu_items[@]})) || {
+  notify-send "Audio output" "No output devices are available."
+  exit 0
+}
+
+choice=$(printf '%s\n' "${menu_items[@]}" |
+  vicinae dmenu --navigation-title='Audio output' --placeholder='Choose speakers or headphones' --no-section --no-quick-look --width=560 --height=420) || exit 0
+
+for i in "${!menu_items[@]}"; do
+  [[ "$choice" == "${menu_items[$i]}" ]] || continue
+  selected=${sink_names[$i]}
+  pactl set-default-sink "$selected"
+  while IFS=$'\t' read -r input _; do
+    [[ -n "$input" ]] && pactl move-sink-input "$input" "$selected"
+  done < <(pactl list short sink-inputs)
+  notify-send "Audio output changed" "${choice#*  }"
+  exit 0
+done

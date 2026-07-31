@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+# The final idle stage suspends only on battery. AC-powered sessions remain
+# locked with the display off for downloads and other unattended work.
+for supply in /sys/class/power_supply/*; do
+  [[ -r "$supply/type" && -r "$supply/online" ]] || continue
+  [[ $(<"$supply/type") == Mains ]] || continue
+  [[ $(<"$supply/online") == 1 ]] && exit 0
+done
+
+systemctl suspend

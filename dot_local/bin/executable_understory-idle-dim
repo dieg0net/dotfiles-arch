@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+# Save the current backlight level, then lower it without ever making a
+# manually dimmed display brighter. Hypridle restores the saved level.
+brightnessctl -s set 30%- >/dev/null
