@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 440" role="img" aria-labelledby="title description">
-  <title id="title">Understory</title>
-  <desc id="description">A shadowy tropical canopy with hanging vines framing the Understory Arch Linux rice.</desc>
+  <title id="title">Arch Dotfiles</title>
+  <desc id="description">A shadowy tropical canopy with hanging vines framing an Arch Linux and Hyprland desktop.</desc>
   <defs>
     <linearGradient id="night" x1="0" y1="0" x2="1" y2="1">
       <stop offset="0" stop-color="#10130f"/>
@@ -56,7 +56,7 @@
 
   <g text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
     <text x="700" y="184" fill="#8ead73" font-size="24" font-weight="650" letter-spacing="9">ARCH LINUX · HYPRLAND</text>
-    <text x="700" y="274" fill="#d8d2c4" font-size="82" font-weight="720" letter-spacing="5">UNDERSTORY</text>
+    <text x="700" y="274" fill="#d8d2c4" font-size="72" font-weight="720" letter-spacing="5">ARCH DOTFILES</text>
     <text x="700" y="322" fill="#89b49b" font-size="24" letter-spacing="2">tropical shade · dark hardwood · climbing green</text>
   </g>
 

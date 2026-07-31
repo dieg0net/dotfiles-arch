@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/understory-canopy.svg" alt="Understory — an Arch Linux and Hyprland rice inspired by tropical shade, dark hardwood, and climbing green">
+  <img src="assets/understory-canopy.svg" alt="Arch Dotfiles — an Arch Linux and Hyprland desktop with a shadowy tropical aesthetic">
 </p>
 
 <p align="center">
@@ -13,14 +13,15 @@
   <sub>One palette from the first unlock to the last terminal.</sub>
 </p>
 
-![The complete Understory desktop](assets/screenshots/desktop.png)
+![The complete Arch and Hyprland desktop](assets/screenshots/desktop.png)
 
-## The rice
+## The desktop
 
-Understory is cohesive before it is flashy. Jungle-shadow blacks leave room to
-focus; dark hardwood adds warmth; fern and climbing-vine greens carry state and
-motion. The same visual language flows through the compositor, terminal,
-launcher, editor, notifications, lock screen, OSD, GTK, and KDE.
+This setup is cohesive before it is flashy. Its visual layer is built with the
+Understory theme: jungle-shadow blacks leave room to focus, dark hardwood adds
+warmth, and fern and climbing-vine greens carry state and motion. That language
+flows through the compositor, terminal, launcher, editor, notifications, lock
+screen, OSD, GTK, and KDE.
 
 The canonical colors and reusable exports live in the standalone
 [Understory palette](https://github.com/dieg0net/understory) project.
@@ -41,8 +42,8 @@ The canonical colors and reusable exports live in the standalone
 
 <table>
   <tr>
-    <td width="50%"><img alt="Understory Vicinae launcher" src="assets/screenshots/launcher.png"></td>
-    <td width="50%"><img alt="Understory LazyVim editor" src="assets/screenshots/editor.png"></td>
+    <td width="50%"><img alt="Vicinae launcher styled with Understory" src="assets/screenshots/launcher.png"></td>
+    <td width="50%"><img alt="LazyVim editor styled with Understory" src="assets/screenshots/editor.png"></td>
   </tr>
   <tr>
     <td align="center"><sub>Vicinae command palette</sub></td>
@@ -93,7 +94,7 @@ Preview the installer without changing anything:
 
 The installer remains category-driven, so development, creator, gaming,
 virtualization, and security tools stay optional. Run `./install.sh
---list-categories` for the complete catalog. The original pre-Understory
+--list-categories` for the complete catalog. The original pre-rice
 installer is preserved at `scripts/glow-up-arch.sh`.
 
 <details>
