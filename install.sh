@@ -125,7 +125,7 @@ add_item() {
 define_catalog() {
     add_category "desktop" "Desktop & Wayland"
     add_item "desktop" "hyprland" "Hyprland session, lock screen, idle policy, wallpaper, portals, and authentication" "hyprland hyprpaper hypridle hyprlock hyprpolkitagent xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland" "" "" ""
-    add_item "desktop" "waybar" "Waybar status bar" "waybar" "" "" ""
+    add_item "desktop" "waybar" "Waybar status bar (current Hyprland Lua protocol support)" "" "waybar-git" "" ""
     add_item "desktop" "vicinae" "Vicinae launcher and command palette" "" "vicinae-bin" "" ""
     add_item "desktop" "kitty" "Kitty terminal" "kitty" "" "" ""
     add_item "desktop" "dolphin" "Dolphin, Gwenview, and Okular" "dolphin gwenview okular ark" "" "" ""

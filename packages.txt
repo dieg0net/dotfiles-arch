@@ -4,7 +4,6 @@ hyprpaper
 hypridle
 hyprlock
 hyprpolkitagent
-waybar
 mako
 swayosd
 kitty
@@ -25,5 +24,6 @@ gwenview
 chezmoi
 
 # AUR packages
+waybar-git
 vicinae-bin
 clipse
