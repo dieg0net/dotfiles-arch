@@ -1,4 +1,4 @@
-# 󱔐 Understory
+# Understory
 
 <p align="center">
   <em>A quiet Arch Linux rice inspired by dark timber, forest floors, and the green that grows underneath.</em>
@@ -17,6 +17,9 @@
 Understory is cohesive before it is flashy. One earthy palette flows through
 the compositor, terminal, launcher, editor, notifications, lock screen, OSD,
 GTK applications, and KDE applications.
+
+The canonical colors and reusable exports live in the standalone
+[Understory palette](https://github.com/dieg0net/understory) project.
 
 | Layer | Choice |
 | --- | --- |

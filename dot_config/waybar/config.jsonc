@@ -21,7 +21,6 @@
       "default": "○",
       "urgent": ""
     },
-    "on-click": "activate",
     "sort-by-number": true
   },
   "hyprland/window": {
