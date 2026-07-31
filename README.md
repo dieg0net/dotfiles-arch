@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/understory-canopy.svg" alt="Understory — an Arch Linux and Hyprland rice inspired by dark timber, forest floors, and new growth">
+  <img src="assets/understory-canopy.svg" alt="Understory — an Arch Linux and Hyprland rice inspired by tropical shade, dark hardwood, and climbing green">
 </p>
 
 <p align="center">
@@ -17,8 +17,8 @@
 
 ## The rice
 
-Understory is cohesive before it is flashy. Deep forest blacks leave room to
-focus; bark browns add warmth; moss and new-growth greens carry state and
+Understory is cohesive before it is flashy. Jungle-shadow blacks leave room to
+focus; dark hardwood adds warmth; fern and climbing-vine greens carry state and
 motion. The same visual language flows through the compositor, terminal,
 launcher, editor, notifications, lock screen, OSD, GTK, and KDE.
 
@@ -50,7 +50,7 @@ The canonical colors and reusable exports live in the standalone
   </tr>
 </table>
 
-## Beneath the canopy
+## Below the canopy
 
 | Gesture | What grows from it |
 | --- | --- |
@@ -116,24 +116,24 @@ scale for another machine.
 
 </details>
 
-## Forest floor
+## Jungle floor
 
 | Role | Hex |
 | --- | --- |
-| Forest black | `#181B16` |
+| Canopy shadow | `#181B16` |
 | Bark surface | `#20251D` |
-| Moss | `#66845A` |
-| New growth | `#8EAD73` |
-| Dark wood | `#4A3829` |
-| Warm wood | `#A47B50` |
+| Jungle moss | `#66845A` |
+| Climbing green | `#8EAD73` |
+| Dark hardwood | `#4A3829` |
+| Sun-warmed wood | `#A47B50` |
 | Linen | `#D8D2C4` |
 
 <p align="center">
-  <img alt="Understory palette swatches" src="https://img.shields.io/badge/forest-181B16?style=for-the-badge">
+  <img alt="Understory palette swatches" src="https://img.shields.io/badge/shadow-181B16?style=for-the-badge">
   <img alt="Bark surface" src="https://img.shields.io/badge/bark-20251D?style=for-the-badge">
-  <img alt="Moss" src="https://img.shields.io/badge/moss-66845A?style=for-the-badge">
-  <img alt="New growth" src="https://img.shields.io/badge/growth-8EAD73?style=for-the-badge">
-  <img alt="Dark wood" src="https://img.shields.io/badge/wood-4A3829?style=for-the-badge">
+  <img alt="Jungle moss" src="https://img.shields.io/badge/moss-66845A?style=for-the-badge">
+  <img alt="Climbing green" src="https://img.shields.io/badge/vine-8EAD73?style=for-the-badge">
+  <img alt="Dark hardwood" src="https://img.shields.io/badge/hardwood-4A3829?style=for-the-badge">
 </p>
 
 The palette is also available as a standalone theme foundation in
