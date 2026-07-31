@@ -1,22 +1,26 @@
-# Understory
-
 <p align="center">
-  <em>A quiet Arch Linux rice inspired by dark timber, forest floors, and the green that grows underneath.</em>
+  <img src="assets/understory-canopy.svg" alt="Understory — an Arch Linux and Hyprland rice inspired by dark timber, forest floors, and new growth">
 </p>
 
 <p align="center">
-  <img alt="Arch Linux" src="https://img.shields.io/badge/Arch_Linux-181B16?style=for-the-badge&logo=archlinux&logoColor=8EAD73">
-  <img alt="Hyprland" src="https://img.shields.io/badge/Hyprland-20251D?style=for-the-badge&logo=wayland&logoColor=89B49B">
-  <img alt="Chezmoi" src="https://img.shields.io/badge/Chezmoi-4A3829?style=for-the-badge&logo=gnu-bash&logoColor=D8D2C4">
+  <a href="https://archlinux.org"><img alt="Arch Linux" src="https://img.shields.io/badge/Arch_Linux-181B16?style=flat-square&logo=archlinux&logoColor=8EAD73"></a>
+  <a href="https://hypr.land"><img alt="Hyprland" src="https://img.shields.io/badge/Hyprland_0.56+-20251D?style=flat-square&logo=wayland&logoColor=89B49B"></a>
+  <a href="https://www.chezmoi.io"><img alt="Chezmoi" src="https://img.shields.io/badge/managed_by-chezmoi-4A3829?style=flat-square&logo=gnubash&logoColor=D8D2C4"></a>
 </p>
 
-![Understory desktop](assets/screenshots/desktop.png)
+<p align="center">
+  <strong>A calm, cohesive desktop built for long sessions.</strong><br>
+  <sub>One palette from the first unlock to the last terminal.</sub>
+</p>
+
+![The complete Understory desktop](assets/screenshots/desktop.png)
 
 ## The rice
 
-Understory is cohesive before it is flashy. One earthy palette flows through
-the compositor, terminal, launcher, editor, notifications, lock screen, OSD,
-GTK applications, and KDE applications.
+Understory is cohesive before it is flashy. Deep forest blacks leave room to
+focus; bark browns add warmth; moss and new-growth greens carry state and
+motion. The same visual language flows through the compositor, terminal,
+launcher, editor, notifications, lock screen, OSD, GTK, and KDE.
 
 The canonical colors and reusable exports live in the standalone
 [Understory palette](https://github.com/dieg0net/understory) project.
@@ -24,7 +28,7 @@ The canonical colors and reusable exports live in the standalone
 | Layer | Choice |
 | --- | --- |
 | Compositor | Hyprland 0.56+ using the modern Lua API |
-| Bar | Waybar with workspaces, privacy capture, media, power, and Mako state |
+| Bar | Waybar Git with workspaces, privacy capture, media, power, and Mako state |
 | Launcher | Vicinae |
 | Terminal | Kitty + JetBrainsMono Nerd Font |
 | Shell | Bash + Starship |
@@ -46,17 +50,22 @@ The canonical colors and reusable exports live in the standalone
   </tr>
 </table>
 
-## Small details
+## Beneath the canopy
 
-- `Super + D` opens the launcher.
-- `Super + V` opens searchable text and image clipboard history.
-- `Super + Shift + S` selects an area and copies it without creating a file.
-- Volume left-click opens the mixer; middle-click mutes; right-click chooses an output.
-- Waybar shows microphone and screen-sharing capture only while active.
-- Idle behavior dims, locks, powers off the panel, then suspends only on battery.
-- The wallpaper and every color-bearing configuration are included.
+| Gesture | What grows from it |
+| --- | --- |
+| `Super + D` | Open the Vicinae command palette |
+| `Super + V` | Search text and image clipboard history |
+| `Super + Shift + S` | Select an area and copy it without creating a file |
+| Volume click / middle / right | Mixer / mute / choose an output |
+| Bell click / middle / right | Restore / do not disturb / clear notifications |
 
-## Install
+The bar exposes microphone and screen capture only while active. Idle behavior
+dims, locks, powers off the panel, and suspends only on battery. The wallpaper
+and every color-bearing configuration are included—there are no missing theme
+pieces hidden outside the repository.
+
+## Grow your own
 
 > [!IMPORTANT]
 > This is an opinionated post-install for Arch Linux, not an unattended OS
@@ -66,6 +75,7 @@ The canonical colors and reusable exports live in the standalone
 ```bash
 git clone https://github.com/dieg0net/dotfiles-arch.git
 cd dotfiles-arch
+less install.sh
 ./install.sh --category desktop --category audio
 ```
 
@@ -86,7 +96,10 @@ virtualization, and security tools stay optional. Run `./install.sh
 --list-categories` for the complete catalog. The original pre-Understory
 installer is preserved at `scripts/glow-up-arch.sh`.
 
-## Layout
+<details>
+<summary><strong>Explore the repository layout</strong></summary>
+
+<br>
 
 ```text
 dot_config/              application configuration managed by Chezmoi
@@ -101,7 +114,9 @@ The Framework Laptop display declaration is near the top of
 `dot_config/hypr/hyprland.lua`; change the output, resolution, refresh rate, or
 scale for another machine.
 
-## Palette
+</details>
+
+## Forest floor
 
 | Role | Hex |
 | --- | --- |
@@ -112,6 +127,17 @@ scale for another machine.
 | Dark wood | `#4A3829` |
 | Warm wood | `#A47B50` |
 | Linen | `#D8D2C4` |
+
+<p align="center">
+  <img alt="Understory palette swatches" src="https://img.shields.io/badge/forest-181B16?style=for-the-badge">
+  <img alt="Bark surface" src="https://img.shields.io/badge/bark-20251D?style=for-the-badge">
+  <img alt="Moss" src="https://img.shields.io/badge/moss-66845A?style=for-the-badge">
+  <img alt="New growth" src="https://img.shields.io/badge/growth-8EAD73?style=for-the-badge">
+  <img alt="Dark wood" src="https://img.shields.io/badge/wood-4A3829?style=for-the-badge">
+</p>
+
+The palette is also available as a standalone theme foundation in
+[`dieg0net/understory`](https://github.com/dieg0net/understory).
 
 ## Privacy
 

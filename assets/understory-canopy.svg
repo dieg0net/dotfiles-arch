@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 440" role="img" aria-labelledby="title description">
+  <title id="title">Understory</title>
+  <desc id="description">A dark forest canopy framing the Understory Arch Linux rice.</desc>
+  <defs>
+    <linearGradient id="night" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#10130f"/>
+      <stop offset="0.55" stop-color="#181b16"/>
+      <stop offset="1" stop-color="#20251d"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="45%" r="55%">
+      <stop offset="0" stop-color="#8ead73" stop-opacity=".16"/>
+      <stop offset="1" stop-color="#8ead73" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grain" width="90" height="90" patternUnits="userSpaceOnUse">
+      <path d="M-10 30C20 5 55 55 100 18M-20 72C22 42 63 95 110 58" fill="none" stroke="#a47b50" stroke-opacity=".055" stroke-width="2"/>
+    </pattern>
+    <filter id="soft"><feGaussianBlur stdDeviation="18"/></filter>
+  </defs>
+
+  <rect width="1400" height="440" rx="28" fill="url(#night)"/>
+  <rect width="1400" height="440" rx="28" fill="url(#grain)"/>
+  <ellipse cx="700" cy="210" rx="510" ry="245" fill="url(#glow)" filter="url(#soft)"/>
+
+  <g fill="none" stroke-linecap="round">
+    <path d="M-25 388C112 330 158 206 225 28" stroke="#4a3829" stroke-width="16"/>
+    <path d="M1425 380C1278 326 1224 202 1168 15" stroke="#4a3829" stroke-width="16"/>
+    <path d="M54 338C151 275 208 183 260 88" stroke="#66845a" stroke-opacity=".42" stroke-width="4"/>
+    <path d="M1340 337C1261 273 1201 180 1160 88" stroke="#66845a" stroke-opacity=".42" stroke-width="4"/>
+  </g>
+
+  <g fill="#293226" stroke="#66845a" stroke-opacity=".4" stroke-width="2">
+    <ellipse cx="75" cy="314" rx="92" ry="32" transform="rotate(-28 75 314)"/>
+    <ellipse cx="135" cy="238" rx="102" ry="38" transform="rotate(18 135 238)"/>
+    <ellipse cx="189" cy="147" rx="93" ry="34" transform="rotate(-32 189 147)"/>
+    <ellipse cx="1325" cy="311" rx="92" ry="32" transform="rotate(28 1325 311)"/>
+    <ellipse cx="1267" cy="235" rx="102" ry="38" transform="rotate(-18 1267 235)"/>
+    <ellipse cx="1211" cy="145" rx="93" ry="34" transform="rotate(32 1211 145)"/>
+  </g>
+
+  <g fill="#66845a" opacity=".28">
+    <ellipse cx="300" cy="425" rx="124" ry="38" transform="rotate(-15 300 425)"/>
+    <ellipse cx="1100" cy="425" rx="124" ry="38" transform="rotate(15 1100 425)"/>
+  </g>
+
+  <g text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif">
+    <text x="700" y="184" fill="#8ead73" font-size="24" font-weight="650" letter-spacing="9">ARCH LINUX · HYPRLAND</text>
+    <text x="700" y="274" fill="#d8d2c4" font-size="82" font-weight="720" letter-spacing="5">UNDERSTORY</text>
+    <text x="700" y="322" fill="#89b49b" font-size="24" letter-spacing="2">dark timber · forest floor · new growth</text>
+  </g>
+
+  <g fill="#8ead73">
+    <path d="M687 115c-28-22-24-58 12-73 9 32 4 56-12 73Z" opacity=".72"/>
+    <path d="M708 114c29-19 31-52 1-70-12 27-11 51-1 70Z" opacity=".92"/>
+    <path d="M699 118v-61" fill="none" stroke="#8ead73" stroke-width="4" stroke-linecap="round"/>
+  </g>
+</svg>
