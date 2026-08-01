@@ -10,9 +10,50 @@
 
 <p align="center">
   <strong>A modern Arch desktop styled with Understory.</strong>
+  <br>
+  <sub>My everyday Arch setup for work, life, late-night games, and whatever the day throws at me.</sub>
+</p>
+
+<p align="center">
+  <a href="#showcase">Showcase</a> ·
+  <a href="#the-desktop">Desktop</a> ·
+  <a href="#below-the-canopy">Keybinds</a> ·
+  <a href="#grow-your-own">Install</a> ·
+  <a href="#jungle-floor">Palette</a>
 </p>
 
 ![The complete Arch and Hyprland desktop](assets/screenshots/desktop.png)
+
+## Showcase
+
+<table>
+  <tr>
+    <td width="50%">
+      <a href="assets/screenshots/desktop.png"><img alt="Understory Hyprland desktop overview" src="assets/screenshots/desktop.png"></a>
+    </td>
+    <td width="50%">
+      <a href="assets/screenshots/launcher.png"><img alt="Vicinae launcher styled with Understory" src="assets/screenshots/launcher.png"></a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><sub><strong>01 · Desktop</strong><br>Hyprland, Waybar, and the canopy</sub></td>
+    <td align="center"><sub><strong>02 · Launch</strong><br>Vicinae command palette</sub></td>
+  </tr>
+  <tr>
+    <td width="50%">
+      <a href="assets/screenshots/editor.png"><img alt="LazyVim editor styled with Understory" src="assets/screenshots/editor.png"></a>
+    </td>
+    <td width="50%">
+      <a href="assets/screenshots/system-monitor.png"><img alt="btop system monitor styled with Understory" src="assets/screenshots/system-monitor.png"></a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><sub><strong>03 · Create</strong><br>LazyVim development workspace</sub></td>
+    <td align="center"><sub><strong>04 · Observe</strong><br>Kitty and a custom btop theme</sub></td>
+  </tr>
+</table>
+
+<p align="center"><sub>Open any frame for the full-resolution screenshot.</sub></p>
 
 ## The desktop
 
@@ -32,6 +73,7 @@ The canonical colors and reusable exports live in the standalone
 | Launcher | Vicinae |
 | Terminal | Kitty + JetBrainsMono Nerd Font |
 | Shell | Bash + Starship |
+| Monitor | btop with a custom Understory theme |
 | Editor | LazyVim / Neovim |
 | Notifications | Mako |
 | OSD | SwayOSD |
@@ -39,16 +81,16 @@ The canonical colors and reusable exports live in the standalone
 | Clipboard | Clipse |
 | Dotfiles | Chezmoi |
 
-<table>
-  <tr>
-    <td width="50%"><img alt="Vicinae launcher styled with Understory" src="assets/screenshots/launcher.png"></td>
-    <td width="50%"><img alt="LazyVim editor styled with Understory" src="assets/screenshots/editor.png"></td>
-  </tr>
-  <tr>
-    <td align="center"><sub>Vicinae command palette</sub></td>
-    <td align="center"><sub>LazyVim with the shared palette</sub></td>
-  </tr>
-</table>
+### What makes it feel alive
+
+- **One visual language.** Understory colors flow through native UI, terminal
+  tools, the editor, launcher, notifications, lock screen, and OSD.
+- **Useful motion.** Workspace transitions, live states, capture indicators,
+  and media controls communicate without turning the desktop noisy.
+- **Laptop-aware.** Battery warnings, idle dimming, suspend behavior, touchpad
+  gestures, brightness feedback, and output switching are already wired in.
+- **Fast everywhere.** Vicinae, Clipse, Starship, LazyVim, and btop keep common
+  actions within a keystroke while staying visually consistent.
 
 ## Below the canopy
 
@@ -57,6 +99,9 @@ The canonical colors and reusable exports live in the standalone
 | `Super + D` | Open the Vicinae command palette |
 | `Super + V` | Search text and image clipboard history |
 | `Super + Shift + S` | Select an area and copy it without creating a file |
+| `Super + Return` | Open Kitty |
+| `Super + E` | Open Dolphin |
+| `Super + L` | Lock the session |
 | Volume click / middle / right | Mixer / mute / choose an output |
 | Bell click / middle / right | Restore / do not disturb / clear notifications |
 

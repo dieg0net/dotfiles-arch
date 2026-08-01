@@ -7,6 +7,7 @@ hyprpolkitagent
 mako
 swayosd
 kitty
+btop
 ttf-jetbrains-mono-nerd
 starship
 neovim
@@ -23,6 +24,7 @@ okular
 gwenview
 imv
 chezmoi
+pacman-contrib
 
 # AUR packages
 waybar-git

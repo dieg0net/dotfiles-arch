@@ -16,6 +16,7 @@ SELECT_ALL="no"
 MINIMAL_ONLY="no"
 DRY_RUN="no"
 NEEDS_VIRT_SETUP="no"
+NEEDS_SDDM_SETUP="no"
 
 BASE_PACKAGES=(
     7zip
@@ -25,10 +26,11 @@ BASE_PACKAGES=(
     fd
     fzf
     git
-    htop
+    btop
     jq
     neovim
     net-tools
+    pacman-contrib
     ripgrep
     zoxide
 )
@@ -124,7 +126,7 @@ add_item() {
 
 define_catalog() {
     add_category "desktop" "Desktop & Wayland"
-    add_item "desktop" "hyprland" "Hyprland session, lock screen, idle policy, wallpaper, portals, and authentication" "hyprland hyprpaper hypridle hyprlock hyprpolkitagent xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland" "" "" ""
+    add_item "desktop" "hyprland" "Hyprland session, themed login, lock screen, idle policy, wallpaper, portals, and authentication" "hyprland hyprpaper hypridle hyprlock hyprpolkitagent sddm xdg-desktop-portal xdg-desktop-portal-gtk xdg-desktop-portal-hyprland" "" "" "sddm"
     add_item "desktop" "waybar" "Waybar status bar (current Hyprland Lua protocol support)" "" "waybar-git" "" ""
     add_item "desktop" "vicinae" "Vicinae launcher and command palette" "" "vicinae-bin" "" ""
     add_item "desktop" "kitty" "Kitty terminal" "kitty" "" "" ""
@@ -534,6 +536,7 @@ build_package_lists() {
     AUR_PACKAGES=()
     FLATPAK_APPS=()
     NEEDS_VIRT_SETUP="no"
+    NEEDS_SDDM_SETUP="no"
 
     append_unique PACMAN_PACKAGES "${BASE_PACKAGES[@]}"
 
@@ -552,6 +555,9 @@ build_package_lists() {
 
         if [[ "${ITEM_POST[$index]}" == *"virt"* ]]; then
             NEEDS_VIRT_SETUP="yes"
+        fi
+        if [[ "${ITEM_POST[$index]}" == *"sddm"* ]]; then
+            NEEDS_SDDM_SETUP="yes"
         fi
     done
 
@@ -683,6 +689,11 @@ install_flatpak_apps() {
     flatpak install -y --or-update flathub "${FLATPAK_APPS[@]}"
 }
 
+configure_package_maintenance() {
+    log "Enabling conservative weekly package-cache maintenance"
+    sudo systemctl enable --now paccache.timer
+}
+
 apply_dotfiles() {
     if ! is_yes "$APPLY_DOTFILES"; then
         log "Skipping chezmoi dotfile apply"
@@ -711,6 +722,24 @@ setup_virtualization() {
     sudo usermod -aG libvirt "$TARGET_USER"
     sudo systemctl enable --now libvirtd.service
     warn "Log out and back in before using virt-manager so the libvirt group change takes effect."
+}
+
+configure_sddm() {
+    if ! is_yes "$NEEDS_SDDM_SETUP"; then
+        log "Skipping SDDM setup"
+        return
+    fi
+
+    local repo_root
+    repo_root="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+    log "Theming SDDM and installing a Hyprland-only session menu"
+    sudo install -d /usr/local/share/wayland-sessions /etc/sddm.conf.d
+    sudo install -m 0644 "$repo_root/system/sddm/breeze-theme.conf.user" /usr/share/sddm/themes/breeze/theme.conf.user
+    sudo install -m 0644 "$repo_root/Pictures/Wallpapers/understory-pattern-dark.png" /usr/share/sddm/themes/breeze/understory-background.png
+    sudo install -m 0644 "$repo_root/system/sddm/hyprland-uwsm.desktop" /usr/local/share/wayland-sessions/hyprland-uwsm.desktop
+    sudo install -m 0644 "$repo_root/system/sddm/10-understory.conf" /etc/sddm.conf.d/10-understory.conf
+    sudo systemctl enable sddm.service
 }
 
 configure_dns() {
@@ -783,9 +812,11 @@ main() {
 
     create_home_directories
     install_pacman_packages
+    configure_package_maintenance
     install_aur_packages
     install_flatpak_apps
     apply_dotfiles
+    configure_sddm
     setup_virtualization
     configure_dns
 

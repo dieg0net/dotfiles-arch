@@ -20,6 +20,7 @@ hl.on("hyprland.start", function()
         "mako",
         "hypridle",
         "nm-applet --indicator",
+        "vicinae server",
         "swayosd-server",
         "clipse -listen",
         "systemctl --user start hyprpolkitagent.service",

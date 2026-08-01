@@ -1,0 +1,7 @@
+[General]
+showlogo=hidden
+showClock=true
+type=image
+color=#181B16
+fontSize=11
+background=/usr/share/sddm/themes/breeze/understory-background.png
