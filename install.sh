@@ -128,7 +128,7 @@ define_catalog() {
     add_item "desktop" "waybar" "Waybar status bar (current Hyprland Lua protocol support)" "" "waybar-git" "" ""
     add_item "desktop" "vicinae" "Vicinae launcher and command palette" "" "vicinae-bin" "" ""
     add_item "desktop" "kitty" "Kitty terminal" "kitty" "" "" ""
-    add_item "desktop" "dolphin" "Dolphin, Gwenview, and Okular" "dolphin gwenview okular ark" "" "" ""
+    add_item "desktop" "dolphin" "Dolphin, imv, Gwenview, and Okular" "dolphin imv gwenview okular ark" "" "" ""
     add_item "desktop" "mako" "Mako notifications" "mako" "" "" ""
     add_item "desktop" "clipboard" "Screenshots and clipboard history" "grim slurp wl-clipboard" "clipse" "" ""
     add_item "desktop" "desktop-controls" "OSD, power profiles, brightness, media, Bluetooth, network, and audio controls" "swayosd brightnessctl power-profiles-daemon blueman network-manager-applet pavucontrol playerctl" "" "" ""

@@ -21,6 +21,7 @@ blueman
 dolphin
 okular
 gwenview
+imv
 chezmoi
 
 # AUR packages

@@ -35,7 +35,7 @@ The canonical colors and reusable exports live in the standalone
 | Editor | LazyVim / Neovim |
 | Notifications | Mako |
 | OSD | SwayOSD |
-| Files | Dolphin + Gwenview + Okular |
+| Files | Dolphin + imv + Gwenview + Okular |
 | Clipboard | Clipse |
 | Dotfiles | Chezmoi |
 

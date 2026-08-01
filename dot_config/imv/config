@@ -1,0 +1,25 @@
+[options]
+background = 181B16
+fullscreen = false
+width = 1200
+height = 800
+initial_pan = 50 50
+loop_input = true
+overlay = true
+overlay_font = JetBrainsMono Nerd Font:18
+overlay_text = $imv_current_index/$imv_file_count  ·  $imv_current_file  ·  ${imv_width}x${imv_height}  ·  ${imv_scale}%
+overlay_text_color = D8D2C4
+overlay_text_alpha = FF
+overlay_background_color = 20251D
+overlay_background_alpha = E8
+overlay_position_bottom = true
+scaling_mode = full
+upscaling_method = linear
+title_text = imv · $imv_current_file
+
+[binds]
+# Keep imv's excellent defaults and add discoverable alternatives.
+<Shift+F> = fullscreen
+<Home> = goto 1
+<End> = goto -1
+<Ctrl+0> = zoom actual
